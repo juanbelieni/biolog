@@ -1,3 +1,4 @@
 server
 public/*
 !public/.gitkeep
+*.sqlite

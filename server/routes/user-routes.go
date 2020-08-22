@@ -61,7 +61,7 @@ func login(ctx echo.Context) error {
 	}
 
 	user := new(models.User)
-	database.DB.Where(&models.User{Email: data.Email}).First(&user)
+	database.DB.Where(&models.User{Email: data.Email}).First(user)
 
 	if user.ID == 0 || !utils.CheckPasswordHash(data.Password, user.HashedPassword) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Email ou senha incorretos.")

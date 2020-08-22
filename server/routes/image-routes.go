@@ -1,22 +1,29 @@
 package routes
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/juanbelieni/biolog/server/database"
+	"github.com/juanbelieni/biolog/server/middlewares"
 	"github.com/juanbelieni/biolog/server/models"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
+type serializedImage struct {
+	models.Image
+	URL string `json:"url"`
+}
+
 func storeImage(ctx echo.Context) error {
 	name := ctx.FormValue("name")
-	userID := uint(ctx.Get("user").(*jwt.Token).Claims.(jwt.MapClaims)["id"].(float64))
+	userID := ctx.Get("id").(uint)
 
 	file, err := ctx.FormFile("image")
 	if err != nil {
@@ -28,7 +35,7 @@ func storeImage(ctx echo.Context) error {
 	}
 	defer src.Close()
 
-	filename := strconv.FormatInt(time.Now().UnixNano(), 10) + "-" + file.Filename
+	filename := strconv.FormatInt(time.Now().UnixNano(), 10) + filepath.Ext(file.Filename)
 
 	dst, err := os.Create("public/" + filename)
 	if err != nil {
@@ -46,7 +53,7 @@ func storeImage(ctx echo.Context) error {
 		UserID:   userID,
 	}
 
-	if err := database.DB.Create(&image).Error; err != nil {
+	if err := database.DB.Create(image).Error; err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
 	}
 
@@ -56,15 +63,24 @@ func storeImage(ctx echo.Context) error {
 func indexImages(ctx echo.Context) error {
 	images := &[]models.Image{}
 
-	if err := database.DB.Preload("User").Find(&images).Error; err != nil {
+	if err := database.DB.Preload("User").Find(images).Error; err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao buscar imagens no banco de dados.")
 	}
 
-	return ctx.JSON(http.StatusOK, images)
+	serializedImages := []serializedImage{}
+
+	for _, image := range *images {
+		serializedImages = append(serializedImages, serializedImage{
+			Image: image,
+			URL:   fmt.Sprintf("http://%s/public/%s", ctx.Request().Host, image.Filename),
+		})
+	}
+
+	return ctx.JSON(http.StatusOK, serializedImages)
 }
 
 func SetupImageRoutes(app *echo.Echo) {
 	group := app.Group("/image")
-	group.POST("", storeImage, middleware.JWT([]byte("secret")))
+	group.POST("", storeImage, middleware.JWT([]byte("secret")), middlewares.Auth)
 	group.GET("", indexImages)
 }
