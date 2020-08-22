@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100rem;
+
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.headerNav {
+  display: flex;
+
+  a {
+    margin-left: 3.2rem;
+    color: #444;
+    cursor: pointer;
+
+    transition-duration: 200ms;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.headerRight {
+  a {
+    min-width: 6rem;
+    margin-left: 3.2rem;
+
+    color: #444;
+    cursor: pointer;
+
+    transition-duration: 200ms;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+a.login {
+  padding: 0.8rem 3rem;
+  border-radius: 8px;
+  border: 2px solid #0bd3a3;
+  color: #0bd3a3;
+
+  &:hover {
+    background-color: #0bd3a3;
+    color: #fff;
+  }
+}
