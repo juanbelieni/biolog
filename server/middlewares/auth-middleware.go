@@ -14,7 +14,7 @@ func Auth(next echo.HandlerFunc) echo.HandlerFunc {
 		userID := uint(ctx.Get("user").(*jwt.Token).Claims.(jwt.MapClaims)["id"].(float64))
 
 		user := new(models.User)
-		if err := database.DB.Where(userID).First(user).Error; err != nil || user.ID != userID {
+		if err := database.DB.Where(userID).First(user).Error; err != nil || userID != user.ID {
 			return echo.NewHTTPError(http.StatusUnauthorized, "Falha na autenticação, faça login novamente.")
 		}
 

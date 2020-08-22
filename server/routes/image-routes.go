@@ -79,8 +79,34 @@ func indexImages(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, serializedImages)
 }
 
+func deleteImage(ctx echo.Context) error {
+	imageID, err := strconv.ParseUint(ctx.Param("id"), 10, 32)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao apagar imagem.")
+	}
+
+	userID := ctx.Get("id").(uint)
+	fmt.Println(imageID, userID)
+
+	image := new(models.Image)
+	if err := database.DB.Where(imageID).First(image).Error; err != nil || uint(imageID) != image.ID {
+		return echo.NewHTTPError(http.StatusNotFound, "Imagem não encontrada.")
+	}
+
+	if image.UserID != userID {
+		return echo.NewHTTPError(http.StatusUnauthorized, "Você não tem permisão para apagar essa imagem.")
+	}
+
+	if err := database.DB.Delete(image).Error; err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao apagar imagem.")
+	}
+
+	return ctx.NoContent(http.StatusOK)
+}
+
 func SetupImageRoutes(app *echo.Echo) {
 	group := app.Group("/image")
 	group.POST("", storeImage, middleware.JWT([]byte("secret")), middlewares.Auth)
 	group.GET("", indexImages)
+	group.DELETE("/:id", deleteImage, middleware.JWT([]byte("secret")), middlewares.Auth)
 }
