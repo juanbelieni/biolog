@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  align-items: center;
+
+  height: 4.2rem;
+  width: 100%;
+  padding: 0 1.6rem;
+
+  input {
+    flex: 1;
+    background-color: #f0f0f0;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    margin-left: 1.6rem;
+
+    &::placeholder {
+      color: #666;
+    }
+  }
+
+  svg {
+    color: #666;
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}

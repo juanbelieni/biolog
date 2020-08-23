@@ -1,0 +1,34 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 4rem;
+
+    .content {
+      max-width: 55rem;
+      width: 100%;
+    }
+  }
+}
+
+.information {
+  background-color: #0bd3a3;
+  color: #fff;
+
+  .content {
+    h1 {
+      font-size: 6rem;
+      margin: 0;
+    }
+
+    p {
+      font-size: 2.5rem;
+    }
+  }
+}

@@ -86,7 +86,6 @@ func deleteImage(ctx echo.Context) error {
 	}
 
 	userID := ctx.Get("id").(uint)
-	fmt.Println(imageID, userID)
 
 	image := new(models.Image)
 	if err := database.DB.Where(imageID).First(image).Error; err != nil || uint(imageID) != image.ID {

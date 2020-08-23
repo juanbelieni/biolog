@@ -1,16 +1,24 @@
-import Head from 'next/head'
-import styles from '../styles/Landing.module.css'
-import Header from '../components/Header'
+import React from 'react';
+
+import Button from '../components/Button';
+import Page from '../components/Page';
+import styles from './index.module.scss';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>BioLog | IFSULDEMINAS</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-        
-    </div>
-  )
+    <Page title="BioLog">
+      <section className={styles.aboutUs}>
+        <h1 className={styles.title}>
+          Espécies de <br />
+          <b>borboletas</b> em <br />
+          Minas Gerais
+        </h1>
+        <p className={styles.description}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <Button>Leia mais</Button>
+      </section>
+    </Page>
+  );
 }

@@ -5,14 +5,16 @@ import (
 	"time"
 
 	"github.com/juanbelieni/biolog/server/database"
+	"github.com/juanbelieni/biolog/server/middlewares"
 	"github.com/juanbelieni/biolog/server/models"
 	"github.com/juanbelieni/biolog/server/utils"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
-type signinData struct {
+type signupData struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -23,8 +25,8 @@ type loginData struct {
 	Password string `json:"password"`
 }
 
-func signin(ctx echo.Context) error {
-	data := new(signinData)
+func signup(ctx echo.Context) error {
+	data := new(signupData)
 	if err := ctx.Bind(data); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao cadastrar usuário.")
 	}
@@ -61,7 +63,7 @@ func login(ctx echo.Context) error {
 	}
 
 	user := new(models.User)
-	database.DB.Where(&models.User{Email: data.Email}).First(user)
+	database.DB.Where("email = ?", data.Email).First(user)
 
 	if user.ID == 0 || !utils.CheckPasswordHash(data.Password, user.HashedPassword) {
 		return echo.NewHTTPError(http.StatusBadRequest, "Email ou senha incorretos.")
@@ -83,9 +85,24 @@ func login(ctx echo.Context) error {
 	})
 }
 
+func profile(ctx echo.Context) error {
+	userID := ctx.Get("id").(uint)
+
+	user := new(models.User)
+	database.DB.Where(userID).First(user)
+
+	if err := database.DB.Where(userID).First(user).Error; err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Erro ao requisitar dados da conta.")
+	}
+
+	return ctx.JSON(http.StatusOK, user)
+}
+
 func SetupUserRoutes(app *echo.Echo) {
 	group := app.Group("/user")
 
-	group.POST("/signin", signin)
+	group.POST("/signup", signup)
 	group.POST("/login", login)
+	group.GET("/profile", profile, middleware.JWT([]byte("secret")), middlewares.Auth)
+
 }
