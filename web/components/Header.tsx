@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import useSWR from 'swr';
@@ -16,7 +17,7 @@ interface User {
 const Header: React.FC = () => {
   const router = useRouter();
   const { token } = useToken();
-  const { data: user } = useSWR(['/user/profile', token], async (url) => {
+  const { data: user } = useSWR(token ? '/user/profile' : null, async (url) => {
     const response = await api.get<User>(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,10 +33,17 @@ const Header: React.FC = () => {
   return (
     <header className={styles.container}>
       <div className={styles.headerLeft}>
-        <img src="/logo.svg" alt="logo" />
+        <Link href="/">
+          <img src="/logo.svg" alt="logo" />
+        </Link>
+
         <div className={styles.headerNav}>
-          <a>Trabalhos</a>
-          <a>Galeria</a>
+          <Link href="/gallery">
+            <a>Galeria</a>
+          </Link>
+          <Link href="">
+            <a>Trabalhos</a>
+          </Link>
         </div>
       </div>
 

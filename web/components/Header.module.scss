@@ -5,12 +5,16 @@
   max-width: 100rem;
 
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .headerLeft {
   display: flex;
   align-items: center;
+
+  img {
+    cursor: pointer;
+  }
 
   .headerNav {
     display: flex;

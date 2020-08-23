@@ -1,0 +1,26 @@
+.title {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.description {
+  color: #444;
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 15rem);
+  grid-template-rows: repeat(auto-fill, 15rem);
+  justify-content: space-between;
+  gap: 1.2rem;
+  .image {
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+  }
+}

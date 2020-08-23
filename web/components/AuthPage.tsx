@@ -18,7 +18,7 @@ const AuthPage: React.FC<Props> = ({
   return (
     <div className={styles.container}>
       <Head>
-        <title>{title}</title>
+        <title>{title} | BioLog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className={styles.information}>

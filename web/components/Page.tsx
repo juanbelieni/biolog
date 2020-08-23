@@ -5,14 +5,14 @@ import Header from './Header';
 import styles from './Page.module.scss';
 
 interface Props {
-  title: string;
+  title?: string;
 }
 
 const Page: React.FC<Props> = ({ title, children }) => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{title}</title>
+        <title>{title === '' ? `${title} | BioLog` : 'BioLog'}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
