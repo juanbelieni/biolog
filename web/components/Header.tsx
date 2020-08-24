@@ -16,7 +16,7 @@ interface User {
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const { token } = useToken();
+  const { token, setToken } = useToken();
   const { data: user } = useSWR(token ? '/user/profile' : null, async (url) => {
     const response = await api.get<User>(url, {
       headers: {
@@ -28,6 +28,10 @@ const Header: React.FC = () => {
 
   function navigateToLogin() {
     router.push('/auth/login');
+  }
+
+  function logout() {
+    setToken('');
   }
 
   return (
@@ -49,7 +53,12 @@ const Header: React.FC = () => {
 
       <div className={styles.headerRight}>
         {user?.name ? (
-          <p>{user.name}</p>
+          <>
+            <p>{user.name}</p>
+            <p className={styles.logout} onClick={logout}>
+              Sair
+            </p>
+          </>
         ) : (
           <Button onClick={navigateToLogin}>Login</Button>
         )}
