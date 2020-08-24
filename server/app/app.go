@@ -9,6 +9,9 @@ import (
 func newApp() *echo.Echo {
 	app := echo.New()
 
+	middleware.ErrJWTMissing.Code = 401
+	middleware.ErrJWTMissing.Message = "Faça login primeiro."
+
 	app.Use(middleware.Logger())
 	app.Use(middleware.Recover())
 	app.Use(middleware.CORS())

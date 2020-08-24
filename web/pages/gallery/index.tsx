@@ -1,9 +1,10 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
+import ModalImage from 'react-modal-image';
 
-import Page from '../components/Page';
-import api from '../services/api';
-import styles from './gallery.module.scss';
+import Page from '../../components/Page';
+import api from '../../services/api';
+import styles from './index.module.scss';
 
 interface Image {
   id: number;
@@ -28,9 +29,13 @@ const Gallery: React.FC<Props> = ({ images }) => {
       </p>
       <div className={styles.gallery}>
         {images.map((image) => (
-          <div className={styles.image} key={image.id}>
-            <img src={image.url} />
-          </div>
+          <ModalImage
+            className={styles.image}
+            key={image.id}
+            small={image.url}
+            large={image.url}
+            alt={image.name}
+          />
         ))}
       </div>
     </Page>
