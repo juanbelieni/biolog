@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     return response.data;
   });
 
-  function redirectToLogin() {
+  function navigateToLogin() {
     router.push('/auth/login');
   }
 
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
         {user?.name ? (
           <p>{user.name}</p>
         ) : (
-          <Button onClick={redirectToLogin}>Login</Button>
+          <Button onClick={navigateToLogin}>Login</Button>
         )}
       </div>
     </header>

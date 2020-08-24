@@ -86,7 +86,7 @@ export default function Login() {
           Entrar
         </Button>
       </form>
-      <p className={styles.redirectSignup}>
+      <p className={styles.navigateToSignup}>
         Ainda não possui uma conta?{' '}
         <Link href="/auth/signup">
           <a>Cadastre-se</a>

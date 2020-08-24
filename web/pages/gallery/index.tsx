@@ -1,7 +1,10 @@
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
+import { FiPlus } from 'react-icons/fi';
 import ModalImage from 'react-modal-image';
 
+import Button from '../../components/Button';
 import Page from '../../components/Page';
 import api from '../../services/api';
 import styles from './index.module.scss';
@@ -20,6 +23,12 @@ interface Props {
 }
 
 const Gallery: React.FC<Props> = ({ images }) => {
+  const router = useRouter();
+
+  function navigateToToUploadImage() {
+    router.push('/gallery/upload');
+  }
+
   return (
     <Page title="Galeria">
       <h1 className={styles.title}>Galeria</h1>
@@ -37,6 +46,9 @@ const Gallery: React.FC<Props> = ({ images }) => {
             alt={image.name}
           />
         ))}
+        <Button onClick={navigateToToUploadImage}>
+          <FiPlus />
+        </Button>
       </div>
     </Page>
   );
