@@ -58,7 +58,7 @@ const Gallery: React.FC = () => {
 
     api
       .post('image', formData, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: token && `Bearer ${token}` },
       })
       .then(() => {
         router.push('/gallery');

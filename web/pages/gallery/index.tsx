@@ -44,6 +44,7 @@ const Gallery: React.FC<Props> = ({ images }) => {
             small={image.url}
             large={image.url}
             alt={image.name}
+            hideDownload
           />
         ))}
         <Button onClick={navigateToToUploadImage}>
@@ -61,7 +62,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       images: response.data,
     },
-    revalidate: 5,
+    revalidate: 1,
   };
 };
 
