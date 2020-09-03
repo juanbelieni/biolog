@@ -7,7 +7,7 @@ import (
 
 func main() {
 	app := app.App
-	port = "3333"
+	port := "3333"
 
 	app.Logger.Fatal(app.Start(":" + port))
 }
