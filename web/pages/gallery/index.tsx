@@ -62,7 +62,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       images: response.data,
     },
-    revalidate: 1,
+    revalidate: 5,
   };
 };
 

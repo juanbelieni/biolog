@@ -17,14 +17,23 @@ interface User {
 const Header: React.FC = () => {
   const router = useRouter();
   const { token, setToken } = useToken();
-  const { data: user } = useSWR(token ? '/user/profile' : null, async (url) => {
-    const response = await api.get<User>(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  });
+  const { data: user } = useSWR(
+    token ? '/user/profile' : null,
+    async (url) => {
+      const response = await api.get<User>(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      errorRetryInterval: 10000,
+      errorRetryCount: 1,
+    }
+  );
 
   function navigateToLogin() {
     router.push('/auth/login');
