@@ -31,6 +31,10 @@ func signup(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao cadastrar usuário.")
 	}
 
+	if !utils.IsValidEmail(data.Email) {
+		return echo.NewHTTPError(http.StatusBadRequest, "Email não permitido.")
+	}
+
 	existingUser := new(models.User)
 	database.DB.Where(&models.User{Email: data.Email}).First(&existingUser)
 
@@ -60,6 +64,10 @@ func login(ctx echo.Context) error {
 	data := new(loginData)
 	if err := ctx.Bind(data); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao fazer login.")
+	}
+
+	if !utils.IsValidEmail(data.Email) {
+		return echo.NewHTTPError(http.StatusBadRequest, "Email não permitido.")
 	}
 
 	user := new(models.User)
