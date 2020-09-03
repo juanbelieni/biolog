@@ -8,6 +8,13 @@ import (
 )
 
 func main() {
+	var port string
 	app := app.App
-	app.Logger.Fatal(app.Start(":" + os.Getenv("PORT")))
+
+	port, exists := os.LookupEnv("PORT")
+	if !exists {
+		port = "3333"
+	}
+
+	app.Logger.Fatal(app.Start(":" + port))
 }
