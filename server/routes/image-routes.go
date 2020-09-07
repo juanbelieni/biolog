@@ -1,10 +1,7 @@
 package routes
 
 import (
-	"fmt"
-	"io"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -12,14 +9,10 @@ import (
 	"github.com/juanbelieni/biolog/server/database"
 	"github.com/juanbelieni/biolog/server/middlewares"
 	"github.com/juanbelieni/biolog/server/models"
+	"github.com/juanbelieni/biolog/server/utils"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
-
-type serializedImage struct {
-	models.Image
-	URL string `json:"url"`
-}
 
 func storeImage(ctx echo.Context) error {
 	name := ctx.FormValue("name")
@@ -29,6 +22,7 @@ func storeImage(ctx echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
 	}
+
 	src, err := file.Open()
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
@@ -37,27 +31,22 @@ func storeImage(ctx echo.Context) error {
 
 	filename := strconv.FormatInt(time.Now().UnixNano(), 10) + filepath.Ext(file.Filename)
 
-	dst, err := os.Create("public/" + filename)
+	url, err := utils.UploadFile(src, "gallery/"+filename)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
-	}
-	defer dst.Close()
-
-	if _, err = io.Copy(dst, src); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
 	}
 
 	image := &models.Image{
-		Name:     name,
-		Filename: filename,
-		UserID:   userID,
+		Name:   name,
+		URL:    url,
+		UserID: userID,
 	}
 
 	if err := database.DB.Create(image).Error; err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao enviar imagem.")
 	}
 
-	return ctx.NoContent(http.StatusCreated)
+	return ctx.String(http.StatusCreated, url)
 }
 
 func indexImages(ctx echo.Context) error {
@@ -67,16 +56,7 @@ func indexImages(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Erro ao buscar imagens no banco de dados.")
 	}
 
-	serializedImages := []serializedImage{}
-
-	for _, image := range *images {
-		serializedImages = append(serializedImages, serializedImage{
-			Image: image,
-			URL:   fmt.Sprintf("http://%s/public/%s", ctx.Request().Host, image.Filename),
-		})
-	}
-
-	return ctx.JSON(http.StatusOK, serializedImages)
+	return ctx.JSON(http.StatusOK, images)
 }
 
 func deleteImage(ctx echo.Context) error {
