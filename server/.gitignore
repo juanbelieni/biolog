@@ -1,5 +1,6 @@
 server
-public/*
-!public/.gitkeep
+uploads/*
+!uploads/.gitkeep
 *.sqlite
 .env
+google-credentials.json
