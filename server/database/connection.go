@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"biolog/models"
+	"github.com/juanbelieni/biolog/server/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

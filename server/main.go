@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "github.com/joho/godotenv/autoload"
-	"biolog/app"
+	"github.com/juanbelieni/biolog/server/app"
 )
 
 func main() {

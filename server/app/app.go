@@ -1,7 +1,7 @@
 package app
 
 import (
-	"biolog/routes"
+	"github.com/juanbelieni/biolog/server/routes"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
