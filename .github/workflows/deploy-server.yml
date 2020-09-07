@@ -15,6 +15,6 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.4.6
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "if-biolog"
+          heroku_app_name: "biolog-api"
           heroku_email: "juanbelieni@gmail.com"
           appdir: "server"
