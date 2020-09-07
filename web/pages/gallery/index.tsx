@@ -47,6 +47,7 @@ const Gallery: React.FC<Props> = ({ images }) => {
             hideDownload
           />
         ))}
+
         <Button onClick={navigateToToUploadImage}>
           <FiPlus />
         </Button>

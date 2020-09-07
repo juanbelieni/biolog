@@ -18,6 +18,7 @@ func UploadFile(file multipart.File, filename string) (string, error) {
 	}
 
 	sw := storageClient.Bucket("biolog").Object(filename).NewWriter(ctx)
+
 	_, err = io.Copy(sw, file)
 	if err != nil {
 		return "", err
