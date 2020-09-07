@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/juanbelieni/biolog/server/database"
-	"github.com/juanbelieni/biolog/server/models"
+	"biolog/database"
+	"biolog/models"
 	"github.com/labstack/echo/v4"
 )
 

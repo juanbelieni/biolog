@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/juanbelieni/biolog/server/database"
-	"github.com/juanbelieni/biolog/server/middlewares"
-	"github.com/juanbelieni/biolog/server/models"
-	"github.com/juanbelieni/biolog/server/utils"
+	"biolog/database"
+	"biolog/middlewares"
+	"biolog/models"
+	"biolog/utils"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"

@@ -1,4 +1,4 @@
-module github.com/juanbelieni/biolog/server
+module biolog
 
 go 1.14
 
