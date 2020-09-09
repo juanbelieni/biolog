@@ -1,4 +1,0 @@
-runtime: go114
-
-env_variables:
-  DATABASE_URL: "postgres://cfridzzqaecpxi:ecb682f5e098732906d7c736f1cbeaf8addc5aca60af926b63fe7bc084aec273@ec2-54-91-178-234.compute-1.amazonaws.com:5432/dpdh2kg1uqs3u"

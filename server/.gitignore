@@ -2,3 +2,4 @@ server
 *.sqlite
 .env
 google-credentials.json
+app.yaml
