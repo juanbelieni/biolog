@@ -2,3 +2,5 @@
 server
 .git
 .gitignore
+node_modules
+dist
