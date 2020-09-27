@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100vh;
+  min-height: 100vh;
 
   section {
     display: flex;
@@ -9,11 +9,16 @@
     align-items: center;
     flex-direction: column;
     padding: 4rem;
+    min-height: 50rem;
 
     .content {
       max-width: 55rem;
       width: 100%;
     }
+  }
+
+  @media screen and (max-width: 950px) {
+    grid-template-columns: 1fr;
   }
 }
 
