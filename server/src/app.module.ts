@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './entities/user.entity';
 import { AuthModule } from './auth/auth.module';
-import { StorageModule } from './storage/storage.module';
+import { ImagesModule } from './images/images.module';
+import { Image } from './entities/image.entity';
 
 @Module({
   imports: [
@@ -14,12 +15,12 @@ import { StorageModule } from './storage/storage.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [User],
+      entities: [User, Image],
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
-    StorageModule,
+    ImagesModule,
   ],
 })
 export class AppModule {}

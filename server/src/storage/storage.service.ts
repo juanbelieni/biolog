@@ -1,24 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { Storage } from '@google-cloud/storage';
+import * as path from 'path';
+import { storage } from 'firebase-admin';
+import { Bucket } from '@google-cloud/storage';
 
 @Injectable()
 export class StorageService {
-  private readonly storage: Storage;
+  private readonly bucket: Bucket;
 
   constructor() {
-    this.storage = new Storage();
+    this.bucket = storage().bucket();
   }
 
-  async uploadFile(filename: string) {
-    const uploadedFile = await this.storage
-      .bucket('if-biolog')
-      .upload(filename, {
-        gzip: true,
-        metadata: {
-          cacheControl: 'public, max-age=31536000',
-        },
-      });
+  private getDownloadUrl(name: string) {
+    return `https://storage.googleapis.com/biolog-api.appspot.com/${name}`;
+  }
 
-    return uploadedFile[0].baseUrl;
+  async uploadFile(file: Express.Multer.File, folder: string) {
+    const uniqueName = String(Date.now());
+    const extension = path.extname(file.originalname);
+
+    const uploadedFile = await this.bucket.upload(file.path, {
+      gzip: true,
+      metadata: {
+        cacheControl: 'public, max-age=31536000',
+      },
+      destination: `${folder}/${uniqueName}${extension}`,
+      public: true,
+    });
+
+    return this.getDownloadUrl(uploadedFile[0].name);
   }
 }
