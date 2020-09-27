@@ -40,7 +40,7 @@ export default function Login() {
     event.preventDefault();
     setDisableButton(true);
     api
-      .post('user/login', data)
+      .post('auth/signin', data)
       .then((response) => {
         setToken(response.data.token);
         router.push('/');

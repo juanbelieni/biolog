@@ -57,7 +57,7 @@ const Gallery: React.FC = () => {
     }
 
     api
-      .post('image', formData, {
+      .post('images', formData, {
         headers: { Authorization: token && `Bearer ${token}` },
       })
       .then(() => {

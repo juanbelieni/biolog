@@ -4,8 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -20,8 +19,10 @@ export class Image {
   @Column()
   url: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(
+    () => User,
+    user => user.images,
+  )
   user: User;
 
   @CreateDateColumn()

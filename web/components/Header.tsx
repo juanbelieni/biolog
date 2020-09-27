@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   const router = useRouter();
   const { token, setToken } = useToken();
   const { data: user } = useSWR(
-    token ? '/user/profile' : null,
+    token ? '/users/profile' : null,
     async (url) => {
       const response = await api.get<User>(url, {
         headers: {

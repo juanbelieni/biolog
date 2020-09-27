@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Image } from './image.entity';
 
 @Entity()
 export class User {
@@ -19,6 +21,12 @@ export class User {
 
   @Column()
   hashedPassword: string;
+
+  @OneToMany(
+    () => Image,
+    image => image.user,
+  )
+  images: Image[];
 
   @CreateDateColumn()
   createdAt: Date;

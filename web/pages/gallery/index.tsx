@@ -13,9 +13,7 @@ interface Image {
   id: number;
   name: string;
   url: string;
-  user: {
-    name: string;
-  };
+  createdAt: string;
 }
 
 interface Props {
@@ -57,7 +55,7 @@ const Gallery: React.FC<Props> = ({ images }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const response = await api.get('/image');
+  const response = await api.get('/images');
 
   return {
     props: {
