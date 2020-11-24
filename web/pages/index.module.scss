@@ -1,4 +1,8 @@
 .aboutUs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 10rem;
+
   .title {
     font-size: 5rem;
     padding: 3rem 0;
@@ -11,7 +15,33 @@
   .description {
     color: #444;
     font-size: 2rem;
-    max-width: 60rem;
     padding-bottom: 4rem;
+    line-height: 30px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 700px) {
+    .title {
+      font-size: 4.2rem;
+    }
+    .description {
+      padding-bottom: 3rem;
+    }
+    img {
+      max-width: 25rem;
+    }
+  }
+
+  @media screen and (max-width: 590px) {
+    grid-template-columns: 1fr;
+    img {
+      display: none;
+    }
   }
 }

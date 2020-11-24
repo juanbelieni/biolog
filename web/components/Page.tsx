@@ -12,7 +12,7 @@ const Page: React.FC<Props> = ({ title, children }) => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{title === '' ? `${title} | BioLog` : 'BioLog'}</title>
+        <title>{title ? `${title} | BioLog` : 'BioLog'}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
