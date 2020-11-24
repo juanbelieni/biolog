@@ -1,7 +1,6 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   max-width: 100rem;
 
   margin: 0 auto;
@@ -31,16 +30,5 @@
         color: #000;
       }
     }
-  }
-}
-
-.headerRight {
-  display: flex;
-  align-items: center;
-
-  .logout {
-    margin-left: 1.6rem;
-    color: #f33c4a;
-    cursor: pointer;
   }
 }

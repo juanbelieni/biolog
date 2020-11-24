@@ -1,0 +1,48 @@
+.title {
+  font-size: 5rem;
+  margin: 3rem 0;
+}
+
+.description {
+  color: #444;
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+.butterfliesFamilyFilter {
+  background-color: #fff;
+  margin-bottom: 4rem;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.butterfliesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 300px));
+  justify-content: space-around;
+  gap: 14rem 3rem;
+
+  margin-bottom: 5rem;
+}
+
+.butterflyCard {
+  .butterflyCardText {
+    .butterflyName {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 0.8rem 0;
+    }
+
+    .butterflyCardLabel {
+      font-size: 1.4rem;
+      color: #888;
+      font-weight: 600;
+      margin-top: 1.6rem;
+    }
+
+    .butterflyCardInformation {
+      font-size: 1.6rem;
+      text-align: justify;
+    }
+  }
+}

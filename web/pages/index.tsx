@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import BorboletaImg from '../assets/borboleta.png';
 import Button from '../components/Button';
 import Page from '../components/Page';
 import styles from './index.module.scss';
